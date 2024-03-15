@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Password Strength Indicator</title>
+      <link rel="stylesheet" href="./style.css">
+   </head>
+   <style>
+body {
+  background-image: url('./img_forest.jpg');
+}
+
+</style>
+   <body>
+      <div class="container">
+         <header>PASSWORD STRENGTH INDICATOR</header>
+         <form action="#">
+            <div class="field">
+               <input onkeyup="trigger()" type="password" placeholder="ENTER YOUR PASSWORD">
+               <span class="showBtn">SHOW</span>
+            </div>
+            <div class="indicator">
+               <span class="weak"></span>
+               <span class="medium"></span>
+               <span class="strong"></span>
+            </div>
+            <div class="text"></div>
+         </form>
+      </div>
+      <script>
+         const indicator = document.querySelector(".indicator");
+         const input = document.querySelector("input");
+         const weak = document.querySelector(".weak");
+         const medium = document.querySelector(".medium");
+         const strong = document.querySelector(".strong");
+         const text = document.querySelector(".text");
+         const showBtn = document.querySelector(".showBtn");
+         let ExpWeak = /[a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z]/;
+         let ExpMedium = /[1,2,3,4,5,6,7,8,9,0]/;
+         let ExpStrong = /.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/;
+         function trigger()
+         {
+           if(input.value != "")
+           {
+             indicator.style.display = "block";
+             indicator.style.display = "flex";
+             if(input.value.length <= 4 && (input.value.match(ExpWeak) || input.value.match(ExpMedium) || input.value.match(ExpStrong)))no=10;
+             if(input.value.length >= 7 && ((input.value.match(ExpWeak) && input.value.match(ExpMedium)) || (input.value.match(ExpMedium) && input.value.match(ExpStrong)) || (input.value.match(ExpWeak) && input.value.match(ExpStrong))))no=20;
+             if(input.value.length >= 7 && input.value.match(ExpWeak) && input.value.match(ExpMedium) && input.value.match(ExpStrong))no=30;
+             if(no==10)
+             {
+               weak.classList.add("active");
+               text.style.display = "block";
+               text.textContent = "YOUR PASSWORD IS WEAK. IT IS NOT SECURE TO USE.";
+               text.classList.add("weak");
+             }
+             if(no==20)
+             {
+               medium.classList.add("active");
+               text.textContent = "YOUR PASSWORD IS MEDIUM. IT IS NOT THAT SECURE TO USE IT.";
+               text.classList.add("medium");
+             }
+             else
+             {
+               medium.classList.remove("active");
+               text.classList.remove("medium");
+             }
+             if(no==30)
+             {
+               weak.classList.add("active");
+               medium.classList.add("active");
+               strong.classList.add("active");
+               text.textContent = "YOUR PASSWORD IS STRONG. IT IS SECURE TO USE IT.";
+               text.classList.add("strong");
+             }
+             else
+             {
+               strong.classList.remove("active");
+               text.classList.remove("strong");
+             }
+             showBtn.style.display = "block";
+             showBtn.onclick = function()
+             {
+               if(input.type == "password")
+               {
+                 input.type = "text";
+                 showBtn.textContent = "HIDE";
+                 showBtn.style.color = "green";
+               }
+               else
+               {
+                 input.type = "password";
+                 showBtn.textContent = "SHOW";
+                 showBtn.style.color = "red";
+               }
+             }
+           }
+           else
+           {
+             indicator.style.display = "none";
+             text.style.display = "none";
+             showBtn.style.display = "none";
+           }
+         }
+      </script>
+   </body>
+</html>
